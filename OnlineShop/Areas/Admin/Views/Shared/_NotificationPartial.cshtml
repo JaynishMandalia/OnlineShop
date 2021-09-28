@@ -1,7 +1,4 @@
-﻿
-@{
-    ViewData["Title"] = "_NotificationPartial";
+﻿@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
 }
-
-<h1>_NotificationPartial</h1>
-
