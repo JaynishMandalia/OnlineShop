@@ -73,7 +73,7 @@ namespace OnlineShop.Areas.Admin.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        //POST request   path => /admin/pages/create
+        //POST request   path => /admin/pages/edit/5
         public async Task<IActionResult> Edit(Page page)
         {
             if (ModelState.IsValid)
