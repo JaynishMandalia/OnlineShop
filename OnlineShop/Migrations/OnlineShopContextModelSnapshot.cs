@@ -18,6 +18,29 @@ namespace OnlineShop.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("OnlineShop.Models.Category", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Sorting")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("OnlineShop.Models.Page", b =>
                 {
                     b.Property<int>("Id")
@@ -30,7 +53,6 @@ namespace OnlineShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Slug")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Sorting")
