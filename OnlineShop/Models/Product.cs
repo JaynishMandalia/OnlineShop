@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using OnlineShop.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,12 +23,18 @@ namespace OnlineShop.Models
         [Column(TypeName ="decimal(18, 2)")]
         public decimal Price { get; set; }
 
+        [Display(Name="Category")]
+        [Range(1, int.MaxValue, ErrorMessage = "You must chose a category")]
         public int CategoryId { get; set; }
 
         public string Image { get; set; }
 
         [ForeignKey("CategoryId")]
         public virtual Category category { get; set; }
+
+        [NotMapped]
+        [FileExtension] // This is coming from infrastructure/fileextensionsarrtibute   
+        public IFormFile ImageUpload { get; set; }
 
     }
 }
