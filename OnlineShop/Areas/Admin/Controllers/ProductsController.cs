@@ -22,6 +22,7 @@ namespace OnlineShop.Areas.Admin.Controllers
             this.context = context;
             this.webHostEnvironment = webHostEnvironment;
         }
+
         //GET admin/categories
         public async Task<IActionResult> Index(int p = 1)
         {
