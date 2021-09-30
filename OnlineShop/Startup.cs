@@ -25,6 +25,15 @@ namespace OnlineShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //
+            services.AddMemoryCache();
+            services.AddSession(options =>
+            {
+                //options.IdleTimeout = TimeSpan.FromSeconds(2);
+                //options.IdleTimeout = TimeSpan.FromDays(2);
+            }
+            );
+            //
             services.AddControllersWithViews();
 
             //Registration of Database 
@@ -49,6 +58,10 @@ namespace OnlineShop
 
             app.UseRouting();
 
+            //
+            app.UseSession();
+            //
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -57,7 +70,13 @@ namespace OnlineShop
                 endpoints.MapControllerRoute(
                     "pages",
                     "{slug?}",
-                    defaults : new { controller  = "Pages", action = "Page" } 
+                    defaults: new { controller = "Pages", action = "Page" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    "products",
+                    "products/{categorySlug}",
+                    defaults: new { controller = "Products", action = "ProductsByCategory" }
                     );
 
                 endpoints.MapControllerRoute(

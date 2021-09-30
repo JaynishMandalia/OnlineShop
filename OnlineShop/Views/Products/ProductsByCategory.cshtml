@@ -2,9 +2,7 @@
 @{
     ViewData["Title"] = "Products";
 }
-
-
-<h1 class="display-4 pb-5">All Products</h1>
+<h1 class="display-4 pb-5">@ViewBag.CategoryName</h1>
 <div class="row">
     @foreach (var item in Model)
     {
@@ -26,8 +24,7 @@
     {
         <div class="d-flex w-100 justify-content-center">
 
-            <Pagination page-count="@ViewBag.TotalPages" page-target="/products" page-number="@ViewBag.PageNumber" page-range="@ViewBag.PageRange"></Pagination>
+            <Pagination page-count="@ViewBag.TotalPages" page-target="/products/@ViewBag.CategorySlug" page-number="@ViewBag.PageNumber" page-range="@ViewBag.PageRange"></Pagination>
         </div>
     }
 </div>
-
