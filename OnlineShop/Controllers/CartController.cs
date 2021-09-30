@@ -41,10 +41,15 @@ namespace OnlineShop.Controllers
             }
             else
             {
-                cartItem.Quantity += 1;
+                cartItem.Quantity += 1; 
             }
+
             HttpContext.Session.SetJson("Cart", cart);
-            return RedirectToAction("Index");
+            if(HttpContext.Request.Headers["X-Requested-With"] != "XMLHttpRequest")
+            {
+                return RedirectToAction("Index");
+            }
+            return ViewComponent("SmallCart");
         }
 
         //GET /cart/decrease/5
@@ -101,9 +106,13 @@ namespace OnlineShop.Controllers
         //GET /cart/clear
         public IActionResult Clear()
         {
-
             HttpContext.Session.Remove("Cart");
-            return RedirectToAction("Index");
+
+            //return RedirectToAction("Page", "Pages"); // Go to specific route
+            //return Redirect("/"); // Directly go to root
+            return Redirect(Request.Headers["Referer"].ToString());
         }
+
+
     }
 }
