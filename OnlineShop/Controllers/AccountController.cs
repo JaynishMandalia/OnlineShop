@@ -14,11 +14,15 @@ namespace OnlineShop.Controllers
     {
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
+        private readonly IPasswordHasher<AppUser> passwordHasher;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager,
+                                 SignInManager<AppUser> signInManager,
+                                 IPasswordHasher<AppUser> passwordHasher)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.passwordHasher = passwordHasher;
         }
 
         //GET /account/register
@@ -74,7 +78,7 @@ namespace OnlineShop.Controllers
                 if (appUser != null)
                 {
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(appUser, login.Password, false, false);
-                    if(result.Succeeded)
+                    if (result.Succeeded)
                     {
                         return Redirect(login.ReturnUrl ?? "/");
                     }
@@ -98,8 +102,31 @@ namespace OnlineShop.Controllers
         public async Task<IActionResult> Edit()
         {
             AppUser appUser = await userManager.FindByNameAsync(User.Identity.Name);
-            User user = new User(appUser);
+            UserEdit user = new UserEdit(appUser);
             return View(user);
+        }
+
+
+        //POST /account/edit
+        [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(UserEdit user)
+        {
+            AppUser appUser = await userManager.FindByNameAsync(User.Identity.Name);
+            if (ModelState.IsValid)
+            {
+                appUser.Email = user.Email;
+                if (user.Password != null)
+                {
+                    appUser.PasswordHash = passwordHasher.HashPassword(appUser, user.Password);
+
+                }
+                IdentityResult result = await userManager.UpdateAsync(appUser);
+                if(result.Succeeded)
+                {
+                    TempData["Success"] = "Your information has beed updated!!";
+                }
+            }
+            return View();
         }
     }
 

@@ -44,10 +44,10 @@ namespace OnlineShop
             services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 8;
-                //options.Password.RequireNonAlphanumeric = false; // I will not include this..
-                //options.Password.RequireLowercase = false; // I will not include this..
-                //options.Password.RequireUppercase = false; // I will not include this..
-                //options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false; // I will not include this..
+                options.Password.RequireLowercase = false; // I will not include this..
+                options.Password.RequireUppercase = false; // I will not include this..
+                options.Password.RequireDigit = false;
 
             })
                     .AddEntityFrameworkStores<OnlineShopContext>()

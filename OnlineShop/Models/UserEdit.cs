@@ -6,17 +6,20 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Models
 {
-    public class User
+    public class UserEdit
     {
-        [Required, MinLength(2, ErrorMessage = "Minimum length is 2"), Display(Name = "Username")]
-        public string UserName { get; set; }
-
         [Required, EmailAddress]
         public string Email { get; set; }
 
 
-        [DataType(DataType.Password), Required, MinLength(8, ErrorMessage = "Minimum length is 8")]
+        [DataType(DataType.Password), MinLength(8, ErrorMessage = "Minimum length is 8")]
         public string Password { get; set; }
 
+        public UserEdit() { }
+        public UserEdit(AppUser appUser)
+        {
+            Email = appUser.Email;
+            Password = appUser.PasswordHash;
+        }
     }
 }
