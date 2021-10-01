@@ -110,7 +110,10 @@ namespace OnlineShop.Controllers
 
             //return RedirectToAction("Page", "Pages"); // Go to specific route
             //return Redirect("/"); // Directly go to root
-            return Redirect(Request.Headers["Referer"].ToString());
+
+            if (HttpContext.Request.Headers["X-Requested-With"] != "XMLHttpRequest") // Checking wether it is normal request or ajax request.
+                return Redirect(Request.Headers["Referer"].ToString());
+            return Ok();
         }
 
 

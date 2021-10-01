@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.Infrastructure;
+using OnlineShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +40,18 @@ namespace OnlineShop
 
             //Registration of Database 
             services.AddDbContext<OnlineShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OnlineShopContext")));
+
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 8;
+                //options.Password.RequireNonAlphanumeric = false; // I will not include this..
+                //options.Password.RequireLowercase = false; // I will not include this..
+                //options.Password.RequireUppercase = false; // I will not include this..
+                //options.Password.RequireDigit = false;
+
+            })
+                    .AddEntityFrameworkStores<OnlineShopContext>()
+                    .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,7 +76,12 @@ namespace OnlineShop
             app.UseSession();
             //
 
+            //
+            app.UseAuthentication();
+            //
+
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

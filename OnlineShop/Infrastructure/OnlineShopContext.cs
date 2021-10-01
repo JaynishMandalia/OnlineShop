@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Infrastructure
 {
-    public class OnlineShopContext : DbContext
+    public class OnlineShopContext : IdentityDbContext<AppUser>
     {
         public OnlineShopContext(DbContextOptions<OnlineShopContext> options) : base(options)
         {
