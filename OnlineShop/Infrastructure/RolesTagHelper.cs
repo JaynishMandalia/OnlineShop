@@ -29,7 +29,7 @@ namespace OnlineShop.Infrastructure
             IdentityRole role = await roleManager.FindByIdAsync(RoleId);
 
             if(role != null)
-            {
+            { 
                 foreach (var user in userManager.Users)
                 {
                     if(user != null && await userManager.IsInRoleAsync(user, role.Name))

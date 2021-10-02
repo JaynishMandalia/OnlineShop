@@ -36,6 +36,10 @@ namespace OnlineShop
             }
             );
             //
+            services.AddRouting(options => options.LowercaseUrls = true);
+
+
+            //
             services.AddControllersWithViews();
 
             //Registration of Database 

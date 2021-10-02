@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Infrastructure;
 using OnlineShop.Models;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Areas.Admin.Controllers
 {
+    //[Authorize(Roles = "admin")]
     [Area("admin")]
     public class CategoriesController : Controller
     {
